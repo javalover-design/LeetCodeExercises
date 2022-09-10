@@ -1,5 +1,8 @@
 package com.AlgorithmExercise.sort;
 
+import java.security.KeyStore;
+import java.util.*;
+
 /**
  * @author binbin
  * @date 2022年09月09日  下午8:00
@@ -12,12 +15,15 @@ package com.AlgorithmExercise.sort;
  * 4.之后进行下一轮，重复将insertValue和insertIndex进行赋值，进行下一轮插入排序
  */
 public class InsertSort {
+
+
     public static void main(String[] args) {
         int[] arr=new int[]{1,5,6,9,7};
         insertSort(arr);
         for (int i = 0; i < arr.length; i++) {
             System.out.print(arr[i]);
         }
+
 
 
     }
