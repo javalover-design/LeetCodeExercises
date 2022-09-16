@@ -13,6 +13,9 @@ public class OneWayRingLinkedListDemo {
         oneWayRingLinkedList.addNodes(5);
         oneWayRingLinkedList.traverseList();
 
+        System.out.println("出链表～");
+        oneWayRingLinkedList.countSequence(1,2,5);
+
     }
 }
 
@@ -58,11 +61,8 @@ class OneWayRingLinkedList{
                 node.setNext(first);
                 //将cur向后移动一个节点，即移动到新加入的节点上，以便后续的加入节点
                 cur=node;
-
             }
-
         }
-
     }
 
     /**
@@ -84,10 +84,63 @@ class OneWayRingLinkedList{
             }
             temp=temp.getNext();
         }
+    }
+
+
+    /**
+     * @author binbin
+     * @date 2022/9/15 下午7:24
+     * @param startNo 起始的序号
+     * @param count 表示数几个
+     * @param nums  节点数
+     */
+    public void countSequence(int startNo,int count,int nums){
+        //需要首先对数据进行校验
+        if (first==null || startNo<1 || startNo>nums){
+            //first指针为空，开始序号小于1,开始的序号大于总数均为不合理
+            throw new RuntimeException("数据不合法，请重新试试！");
+        }
+        //创建一个辅助指针
+        Node helper=first;
+        //需要将helper指向链表的最后一个
+        while (true){
+            //通过遍历来实现
+            if (helper.getNext()==first){
+                //表示helper指向了最后一个节点
+                break;
+            }
+            helper=helper.getNext();
+        }
+
+        //进行报数前将first和helper移动（startNo-1）次，表示的是要从那里开始遍历出链表
+        for (int j=0;j<startNo-1;j++){
+            first=first.getNext();
+            helper=helper.getNext();
+        }
+
+        //当开始报数的时候，移动(count-1)次，然后出圈
+        while (true){
+            //当helper和first相等的时候，说明圈中只有一个节点
+            if (helper==first){
+                break;
+            }
+            //此时让first和helper一起移动count-1次循环
+            for (int j=0;j<count-1;j++){
+                first=first.getNext();
+                helper=helper.getNext();
+            }
+            //此时first指向的节点就是待删除的节点
+            System.out.println("节点编号为："+first.getNo()+"的节点出列");
+            //这时候将first指向的节点删除
+            first=first.getNext();
+            helper.setNext(first);
+
+        }
+        System.out.println("最后留在单向链表中的节点编号为："+first.getNo());
+
 
 
     }
-
 }
 /**
  * @author binbin
