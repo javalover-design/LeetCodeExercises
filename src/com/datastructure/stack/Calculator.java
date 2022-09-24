@@ -9,7 +9,7 @@ public class Calculator {
 
     public static void main(String[] args) {
         //要计算的表达式
-        String expression="3+2*6-2";
+        String expression="30+2*6-2";
         //创建两个栈，一个是数栈，一个是符号栈
         ArrayStack2 numberStack = new ArrayStack2(10);
         ArrayStack2 operatorStack = new ArrayStack2(10);
@@ -21,6 +21,8 @@ public class Calculator {
         int result=0;
         //将每次扫描到的字符char存入ch中
         char ch=' ';
+        //定义一个字符串用来拼接扫描到的数字
+        String keepNum="";
         //使用while语句循环扫描expression
         while (true){
             //依次得到字符串中的每一个字符 ,前者表示取出一个字符，后者将该字符串的第一个位置转为字符
@@ -49,8 +51,23 @@ public class Calculator {
                     operatorStack.push(ch);
                 }
             }else{
-                //由于扫描到的是字符，根据ASCII码表，字符和数字相差48,即字符+48为数字
-                numberStack.push(ch-48);
+                ////由于扫描到的是字符，根据ASCII码表，字符和数字相差48,即字符+48为数字
+                //numberStack.push(ch-48);
+                keepNum+=ch;
+                //如果需要入数字栈需要判断是否是多位数的，如果是多位数，则需要一直扫描，直到遇见符号为止。
+                if (index==expression.length()-1){
+                    //如果当前的字符位置在最后一位，则可以直接入数栈，不需再看后面一位
+                    numberStack.push(Integer.parseInt(keepNum));
+                }else {
+                    //如果当前字符的下一个字符为操作符号，则表示可以入栈
+                    if (operatorStack.isOperator(expression.substring(index + 1, index + 2).charAt(0))) {
+                        //真正要存入数栈的是和ch字符结合的字符串
+                        numberStack.push(Integer.parseInt(keepNum));
+                        //keepnum需要清空
+                        keepNum="";
+
+                    }
+                }
             }
 
 
