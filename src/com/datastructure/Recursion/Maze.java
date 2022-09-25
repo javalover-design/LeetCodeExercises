@@ -1,5 +1,7 @@
 package com.datastructure.Recursion;
 
+import java.util.HashMap;
+
 /**
  * @author binbin
  * @date 2022年09月24日  下午7:17
@@ -21,6 +23,8 @@ public class Maze {
         }
         maze[3][1]=1;
         maze[3][2]=1;
+        maze[1][2]=1;
+        maze[2][2]=1;
         //输出地图
         System.out.println("初始的地图如下：");
         for (int i=0;i<8;i++){
@@ -30,7 +34,7 @@ public class Maze {
             System.out.println();
         }
         //使用方法模拟小球路径.因为maze是个引用类型，传递的是引用，递归能够对同一张地图进行更改。
-        setWay(maze,1,1);
+        setWay2(maze,1,1);
 
         System.out.println("走过后的地图样式");
         for (int i=0;i<8;i++){
@@ -92,10 +96,42 @@ public class Maze {
                 //如果map[i][j]不为0的时候，则表示该点有3种情况，1表示为墙，2表示为已经走过的路，3表示走过，但是无法
                 // 走通，直接返回false
                 return false;
-
             }
         }
 
+
+    }
+
+    /**
+     * @author binbin
+     * @date 2022/9/25 下午1:54
+     * @param map
+     * @param i
+     * @param j 
+     * @return boolean 
+     */
+    public static boolean setWay2(int[][]map,int i, int j){
+        if (map[6][5]==2){
+             return true;
+        }else{
+            if (map[i][j]==0){
+                map[i][j]=2;
+                if (setWay2(map,i-1,j)){
+                    return true;
+                }else if (setWay2(map,i,j+1)){
+                    return true;
+                }else if (setWay2(map,i+1,j)){
+                    return true;
+                }else if (setWay2(map,i,j-1)){
+                    return true;
+                }else{
+                    map[i][j]=3;
+                    return false;
+                }
+            }else{
+                return false;
+            }
+        }
 
     }
 }
