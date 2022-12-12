@@ -143,4 +143,41 @@ class ThreadedBinaryTree{
         threadedInfixOrder(node.getRight());
 
     }
+
+    /**
+     * @author binbin
+     * @date 2022/12/10 下午7:43
+     * 遍历中序线索化二叉树
+     * 1.从根节点出发，只要当前节点不为空，则循环遍历
+     * 2。只要当前节点的左指针域类型为前驱节点类型，则直接输出当前节点，若不为节点类型，则直接循环移动到下一个节点，此举旨在找到中序线索遍历
+     * 的第一个节点
+     * 3.接着处理右节点，对于右节点而言，只要该节点的右指针域指向的是后继节点，则直接输出其后继节点，如果当前节点无后继节点了，则直接将当前节点
+     * 向右移动，即处理为当前节点的右节点
+     */
+    public void threadedInfixList(){
+        //需要定义一个节点，用来表示当前节点，从root开始
+        Node node=root;
+        //只要处理的节点不为空，则一直循环遍历
+        while (node!=null){
+            //遍历左边
+            while (node.getLeftType()==0){
+                //如果当前节点的左指针域指向的是左树，则继续寻找
+                node=node.getLeft();
+            }
+            //出循环表示，当前节点的左指针域指向的不是树，直接输出当前节点
+            System.out.println(node);
+
+        //遍历右边，只要当前节点的右指针域指向的是节点，则直接输出，并接着判断
+            while (node.getRightType()==1){
+                node=node.getRight();
+                System.out.println(node);
+
+            }
+
+         //出循环表示该节点的右指针域指向的是树，则将当前节点继续向右移动
+            node=node.getRight();
+
+        }
+    }
+
 }
